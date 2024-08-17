@@ -1,10 +1,20 @@
 "use client";
-import CardAreaChart from "@/components/card/CardAreaChart";
+
 import { useEffect, useMemo, useState } from "react";
 import { IMetrics } from "@/interfaces/stats.interface";
 import curiahubServices from "@/services/curiahub.services";
 import dayjs from "dayjs";
-import CardHeaderChart from "@/components/card/CardHeaderChart";
+import dynamic from "next/dynamic";
+
+const CardHeaderChart = dynamic(() => import("@/components/card/CardHeaderChart"), {
+  ssr: false,
+  loading: () => <p>Loading...</p>
+});
+
+const CardAreaChart = dynamic(() => import("@/components/card/CardAreaChart"), {
+  ssr: false,
+  loading: () => <p>Loading...</p>
+});
 
 export function HomePage() {
   const [metrics, setMetrics] = useState<IMetrics[]>([]);

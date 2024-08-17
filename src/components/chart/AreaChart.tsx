@@ -69,7 +69,11 @@ const AreaChart: React.FC<AreaChartProps> = ({ data, height, label, unit }) => {
   return (
     <div>
       <CardContent>
-        <ChartContainer config={chartConfig} className={`max-h-[${height}px] w-full`}>
+        <ChartContainer
+          config={chartConfig}
+          className="w-full"
+          style={{ height: `${height}px`, maxHeight: `${height}px` }}
+        >
           <ReChartAreaChart
             accessibilityLayer
             data={data}
