@@ -1,8 +1,6 @@
-import AreaChart, { Data } from "@/components/chart/AreaChart";
+import { Data } from "@/components/chart/AreaChart";
 import HeaderChart from "@/components/chart/HeaderChart";
 import { Card } from "@/components/ui/card";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { Info } from "lucide-react";
 
 interface CardHeaderChartProps {
   title: string;
@@ -11,12 +9,15 @@ interface CardHeaderChartProps {
   data?: Data[];
 }
 
-const CardHeaderChart: React.FC<CardHeaderChartProps> = ({ title, description, value, data }) => {
+const CardHeaderChart: React.FC<CardHeaderChartProps> = ({ title, value, data }) => {
   return (
-    <Card>
+    <Card className="rounded-lg">
       <div className="grid grid-cols-2">
-        <div>1</div>
-       
+        <div className="">
+          <div>{title}</div>
+          <p className="text-xs">{Math.floor(value).toLocaleString()}</p>
+        </div>
+
         <div>
           <HeaderChart data={data} />
         </div>

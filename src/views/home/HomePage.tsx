@@ -9,6 +9,25 @@ import CardHeaderChart from "@/components/card/CardHeaderChart";
 export function HomePage() {
   const [metrics, setMetrics] = useState<IMetrics[]>([]);
   const [latestMetrics, setLatestMetrics] = useState<IMetrics>();
+
+  const holderWallet = useMemo(() => {
+    return metrics.map((metric) => {
+      return {
+        x: dayjs(metric.date).format("MMM D YYYY"),
+        y: metric.holderWallet
+      };
+    });
+  }, [metrics]);
+
+  const totalSupply = useMemo(() => {
+    return metrics.map((metric) => {
+      return {
+        x: dayjs(metric.date).format("MMM D YYYY"),
+        y: metric.maxTotalSupply
+      };
+    });
+  }, [metrics]);
+
   const circulatingSupply = useMemo(() => {
     return metrics.map((metric) => {
       return {
@@ -23,6 +42,15 @@ export function HomePage() {
       return {
         x: dayjs(metric.date).format("MMM D YYYY"),
         y: metric.votableSupply
+      };
+    });
+  }, [metrics]);
+
+  const votableSupplyPercentage = useMemo(() => {
+    return metrics.map((metric) => {
+      return {
+        x: dayjs(metric.date).format("MMM D YYYY"),
+        y: (metric.votableSupply / metric.circulatingSupply) * 100
       };
     });
   }, [metrics]);
@@ -46,26 +74,26 @@ export function HomePage() {
   console.log(metrics);
 
   return (
-    <div>
-      <div className="bg-background ">
-        <div className="container space-y-4 pb-5">
-          <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-            <div className="">Holder metrics</div>
+    <div className="space-y-4">
+      <div className="bg-background space-y-4 ">
+        <div className="container px-20">
+          <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 items-center">
+            <div className="text-5xl text-red-500 ">Holder metrics</div>
             <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
               <div className="">
                 <CardHeaderChart
-                  title="Circulating Supply"
+                  title="Holder Wallets"
                   description="The amount of tokens that are circulating in the market and are tradeable by the public."
-                  value={latestMetrics?.circulatingSupply || 0}
-                  data={circulatingSupply}
+                  value={latestMetrics?.holderWallet || 0}
+                  data={holderWallet}
                 />
               </div>
               <div className="">
                 <CardHeaderChart
-                  title="Circulating Supply"
+                  title="Total Supply"
                   description="The amount of tokens that are circulating in the market and are tradeable by the public."
-                  value={latestMetrics?.circulatingSupply || 0}
-                  data={circulatingSupply}
+                  value={latestMetrics?.maxTotalSupply || 0}
+                  data={totalSupply}
                 />
               </div>
             </div>
@@ -73,37 +101,37 @@ export function HomePage() {
         </div>
       </div>
 
-      <div className="container space-y-4 pt-4">
+      <div className="container space-y-4 px-20">
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
           <CardAreaChart
             title="Circulating Supply"
             description="The amount of tokens that are circulating in the market and are tradeable by the public."
             value={latestMetrics?.circulatingSupply || 0}
             data={circulatingSupply}
+            height={450}
+            label="Tokens"
+            unit="token"
           />
           <CardAreaChart
             title="Votable Supply"
             description="The total amount of tokens that is delegated to vote."
             value={latestMetrics?.votableSupply || 0}
             data={votableSupply}
+            height={450}
+            label="Tokens"
+            unit="token"
           />
         </div>
 
         <div className="grid grid-cols-1 gap-4 ">
           <CardAreaChart
-            title="Circulating Supply"
-            description="The amount of tokens that are circulating in the market and are tradeable by the public."
-            value={latestMetrics?.circulatingSupply || 0}
-            data={circulatingSupply}
-          />
-        </div>
-
-        <div className="grid grid-cols-1 gap-4 ">
-          <CardAreaChart
-            title="Circulating Supply"
-            description="The amount of tokens that are circulating in the market and are tradeable by the public."
-            value={latestMetrics?.circulatingSupply || 0}
-            data={circulatingSupply}
+            title="Share of Votable Supply"
+            description="The percentage of tokens that are circulating in the market and are tradeable by the public."
+            value={(Number(latestMetrics?.votableSupply) / Number(latestMetrics?.circulatingSupply)) * 100 || 0}
+            data={votableSupplyPercentage}
+            height={300}
+            label="Votable supply percentage"
+            unit="percent"
           />
         </div>
       </div>

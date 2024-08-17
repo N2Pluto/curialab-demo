@@ -8,11 +8,15 @@ interface CardAreaChartProps {
   description: string;
   value: number;
   data?: Data[];
+  height?: number;
+  label: string;
+  unit?: string;
 }
 
-const CardAreaChart: React.FC<CardAreaChartProps> = ({ title, description, value, data }) => {
+const CardAreaChart: React.FC<CardAreaChartProps> = ({ title, description, value, data, height, label, unit }) => {
+  console.log("value", value);
   return (
-    <Card className="p-4 space-y-4 h-auto">
+    <Card className="p-6 space-y-4 h-auto rounded-2xl">
       <div className="flex space-x-1 items-center">
         <p className="text-xl">{title}</p>
         <TooltipProvider>
@@ -27,12 +31,22 @@ const CardAreaChart: React.FC<CardAreaChartProps> = ({ title, description, value
         </TooltipProvider>
       </div>
       <div className="flex justify-end space-x-2 items-baseline">
-        <p className="text-3xl">{Math.floor(value).toLocaleString()}</p>
-        <p>Tokens</p>
+        {unit === "token" && (
+          <>
+            <p className="text-3xl">{Math.floor(value).toLocaleString()}</p>
+            <p>{unit}</p>
+          </>
+        )}
+        {unit === "percent" && (
+          <>
+            <p className="text-3xl">{value.toFixed(2)}</p>
+            <p className="text-3xl">%</p>
+          </>
+        )}
       </div>
 
       <div>
-        <AreaChart data={data} />
+        <AreaChart data={data} height={height} label={label} unit={unit} />
       </div>
     </Card>
   );

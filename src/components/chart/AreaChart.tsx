@@ -1,10 +1,8 @@
 "use client";
+import { Area, AreaChart as ReChartAreaChart, CartesianGrid, XAxis, YAxis, Label, ReferenceLine } from "recharts";
 
-import { TrendingUp } from "lucide-react";
-import { Area, AreaChart as ReChartAreaChart, CartesianGrid, XAxis, YAxis, Label } from "recharts";
-
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
+import { CardContent } from "@/components/ui/card";
+import { ChartConfig, ChartContainer, ChartTooltip } from "@/components/ui/chart";
 import formatNumber from "@/utils/format";
 import dayjs from "dayjs";
 
@@ -25,9 +23,12 @@ interface AreaChartProps {
   description?: string;
   value?: number;
   data?: Data[];
+  height?: number;
+  label: string;
+  unit?: string;
 }
 
-const AreaChart: React.FC<AreaChartProps> = ({ data }) => {
+const AreaChart: React.FC<AreaChartProps> = ({ data, height, label, unit }) => {
   const minValue = Math.min(...(data ?? []).map((d) => d.y));
   const maxValue = Math.max(...(data ?? []).map((d) => d.y));
 
@@ -49,10 +50,26 @@ const AreaChart: React.FC<AreaChartProps> = ({ data }) => {
     return null;
   };
 
+  const tickFormatter = (value: number) => {
+    if (unit === "percent") {
+      return value.toFixed(0) + "%";
+    } else {
+      return formatNumber(value);
+    }
+  };
+
+  const domainFormatter = () => {
+    if (unit === "percent") {
+      return undefined;
+    } else {
+      return domain;
+    }
+  };
+
   return (
     <div>
       <CardContent>
-        <ChartContainer config={chartConfig}>
+        <ChartContainer config={chartConfig} className={`max-h-[${height}px] w-full`}>
           <ReChartAreaChart
             accessibilityLayer
             data={data}
@@ -68,10 +85,38 @@ const AreaChart: React.FC<AreaChartProps> = ({ data }) => {
               </linearGradient>
             </defs>
             <CartesianGrid vertical={false} />
+
             <XAxis dataKey="x" tickMargin={3} tickFormatter={(value) => dayjs(value).format("MMM YY")} />
-            <YAxis axisLine={false} tickLine={false} tickFormatter={(value) => formatNumber(value)} domain={domain}>
-              <Label value="Tokens" offset={8} position="left" angle={270} />
+            <YAxis axisLine={false} tickLine={false} tickFormatter={tickFormatter} domain={domainFormatter()}>
+              <Label value={label} offset={8} position="left" angle={270} style={{ textAnchor: "middle" }} />
             </YAxis>
+            {unit === "percent" && (
+              <>
+                <ReferenceLine
+                  x="Oct 20 2023"
+                  stroke="rgb(192, 223, 214)"
+                  label={{ value: "Season 4", position: "insideTopRight" }}
+                  strokeDasharray="4 4"
+                  fill="none"
+                  strokeWidth="2"
+                />
+                <ReferenceLine
+                  x="May 18 2024"
+                  stroke="rgb(185, 219, 238)"
+                  label={{ value: "Season 5", position: "insideTopRight" }}
+                  strokeDasharray="4 4"
+                  strokeWidth="2"
+                />
+                <ReferenceLine
+                  x="Aug 16 2024"
+                  stroke="rgb(245, 206, 185)"
+                  label={{ value: "Season 6", position: "insideTopRight" }}
+                  strokeDasharray="4 4"
+                  strokeWidth="2"
+                />
+              </>
+            )}
+
             <ChartTooltip content={customTooltip} />
             <Area
               dataKey="y"

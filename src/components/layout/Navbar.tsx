@@ -67,7 +67,7 @@ export function Navbar() {
               <div className="flex justify-end">
                 <div className="content-center">
                   <div className="css-1njaxz3 flex items-center">
-                    <div className="p-1">
+                    <div className="p-[1px]">
                       <Link href={routes.HOME}>
                         <div className="bg-white rounded-full p-4">
                           <Menu />

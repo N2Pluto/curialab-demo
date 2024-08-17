@@ -10,8 +10,6 @@ interface ResGetHolder {
   metrics: IMetrics[];
 }
 
-
-
 const getPrice = async (): Promise<ResGetPrice> => {
   const path = "/stats/op-price";
   const { data } = await axiosInstance.get(path);
