@@ -15,6 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import curiahubServices from "@/services/curiahub.services";
 import { useEffect, useState } from "react";
+import { routes } from "@/constant/routes";
 
 export function Navbar() {
   const [price, setPrice] = useState<number>(0);
@@ -35,86 +36,75 @@ export function Navbar() {
   }, []);
 
   return (
-    <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
-      <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
-        <Link href="#" className="flex items-center gap-2 text-lg font-semibold md:text-base">
-          <Package2 className="h-6 w-6" />
-          <span className="sr-only">{price}</span>
-        </Link>
-        <Link href="#" className="text-muted-foreground transition-colors hover:text-foreground">
-        {price}
-        </Link>
-        <Link href="#" className="text-muted-foreground transition-colors hover:text-foreground">
-          Orders
-        </Link>
-        <Link href="#" className="text-muted-foreground transition-colors hover:text-foreground">
-          Products
-        </Link>
-        <Link href="#" className="text-muted-foreground transition-colors hover:text-foreground">
-          Customers
-        </Link>
-        <Link href="#" className="text-foreground transition-colors hover:text-foreground">
-          Settings
-        </Link>
-      </nav>
-      <Sheet>
-        <SheetTrigger asChild>
-          <Button variant="outline" size="icon" className="shrink-0 md:hidden">
-            <Menu className="h-5 w-5" />
-            <span className="sr-only">Toggle navigation menu</span>
-          </Button>
-        </SheetTrigger>
-        <SheetContent side="left">
-          <nav className="grid gap-6 text-lg font-medium">
-            <Link href="#" className="flex items-center gap-2 text-lg font-semibold">
-              <Package2 className="h-6 w-6" />
-              <span className="sr-only">Acme Inc</span>
-            </Link>
-            <Link href="#" className="text-muted-foreground hover:text-foreground">
-              Dashboard
-            </Link>
-            <Link href="#" className="text-muted-foreground hover:text-foreground">
-              Orders
-            </Link>
-            <Link href="#" className="text-muted-foreground hover:text-foreground">
-              Products
-            </Link>
-            <Link href="#" className="text-muted-foreground hover:text-foreground">
-              Customers
-            </Link>
-            <Link href="#" className="hover:text-foreground">
-              Settings
-            </Link>
-          </nav>
-        </SheetContent>
-      </Sheet>
-      <div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
-        <form className="ml-auto flex-1 sm:flex-initial">
-          <div className="relative">
-            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-            <Input
-              type="search"
-              placeholder="Search products..."
-              className="pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px]"
-            />
+    <header className="sticky top-0 z-50 flex h-20 items-center gap-4  bg-background px-4 md:px-6">
+      <div className="flex w-full justify-between">
+        <nav className=" flex-col gap-1 text-lg font-medium md:flex md:flex-row md:items-center md:text-sm">
+          <Link href={routes.HOME} className="flex items-center gap-2 text-lg font-semibold md:text-base">
+            <div className="flex space-x-2">
+              <div className="w-[32px] md:w-[32px] cursor-pointer select-none ">
+                <img className="h-full" src="/images/curia-logo.svg" alt="logo" />
+              </div>
+              <div className="w-[31px] md:w-[179px] cursor-pointer select-none hidden lg:block">
+                <img className="h-full" src="/images/curia-logo-text.svg" alt="logo" />
+              </div>
+            </div>
+          </Link>
+          <div className="content-center hidden lg:block">
+            <div className="flex space-x-2 css-1njaxz2 justify-center items-center">
+              <div className="w-[32px] md:w-[32px]  select-none ">
+                <img className="h-full" src="/images/op-logo.svg" alt="logo" />
+              </div>
+              <div className="w-[32px] md:w-[32px]  select-none">
+                <p className="text-xs md:text-xs">${price.toFixed(2)}</p>
+              </div>
+            </div>
           </div>
-        </form>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="secondary" size="icon" className="rounded-full">
-              <CircleUser className="h-5 w-5" />
-              <span className="sr-only">Toggle user menu</span>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>My Account</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>Settings</DropdownMenuItem>
-            <DropdownMenuItem>Support</DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>Logout</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        </nav>
+
+        <nav className=" flex-row gap-1  items-center text-sm font-medium lg:flex md:flex-row hidden ">
+          <div className="ml-auto flex-1 sm:flex-initial">
+            <div className="relative">
+              <div className="flex justify-end">
+                <div className="content-center">
+                  <div className="css-1njaxz3 flex items-center">
+                    <div className="p-1">
+                      <Link href={routes.HOME}>
+                        <div className="bg-white rounded-full p-4">
+                          <Menu />
+                        </div>
+                      </Link>
+                    </div>
+
+                    <div className="pl-3 pr-6">
+                      <p className="text-white">Holder</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </nav>
+
+        <nav className=" flex-row gap-1  items-center text-sm font-medium lg:flex md:flex-row hidden ">
+          <div className="ml-auto flex-1 sm:flex-initial">
+            <div className="relative">
+              <div className="flex justify-end">
+                <div className="content-center pr-1">
+                  <Link href={routes.FORM} target="_blank">
+                    <p className="text-md">Request Features</p>
+                  </Link>
+                </div>
+                <div className="content-center pl-3">
+                  <Link href={routes.HOME}>
+                    <Button className="rounded-3xl bg-red-100 hover:bg-red-300 border-current" variant="outline">
+                      <p className="text-sm">Delegate Us</p>
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </nav>
       </div>
     </header>
   );

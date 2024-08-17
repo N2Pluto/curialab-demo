@@ -6,6 +6,7 @@ import { Area, AreaChart as ReChartAreaChart, CartesianGrid, XAxis, YAxis, Label
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import formatNumber from "@/utils/format";
+import dayjs from "dayjs";
 
 const chartConfig = {
   x: {
@@ -20,22 +21,36 @@ export interface Data {
 }
 
 interface AreaChartProps {
+  title?: string;
+  description?: string;
+  value?: number;
   data?: Data[];
 }
 
 const AreaChart: React.FC<AreaChartProps> = ({ data }) => {
+  const minValue = Math.min(...(data ?? []).map((d) => d.y));
+  const maxValue = Math.max(...(data ?? []).map((d) => d.y));
+
+  const domain = [minValue * 0.9, maxValue * 1.1];
+
   const customTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
       console.log("payload", payload);
       console.log("label", label);
-      return <div>{`${label}: ${formatNumber(payload[0].value)}`}</div>;
+      return (
+        <div className="box-border h-22 w-40 p-3  border-2 bg-white flex flex-col items-end rounded">
+          <p className="text-[10px]">{`${label}`}</p>
+          <div className="border-t my-3 w-full"></div>
+          <div>{`${Math.floor(payload[0].value).toLocaleString()} Token`}</div>
+        </div>
+      );
     }
 
     return null;
   };
 
   return (
-    <Card>
+    <div>
       <CardContent>
         <ChartContainer config={chartConfig}>
           <ReChartAreaChart
@@ -45,7 +60,6 @@ const AreaChart: React.FC<AreaChartProps> = ({ data }) => {
               left: 12,
               right: 12
             }}
-            height={200}
           >
             <defs>
               <linearGradient id="colorRedWhite" x1="0" y1="0" x2="0" y2="1">
@@ -54,26 +68,24 @@ const AreaChart: React.FC<AreaChartProps> = ({ data }) => {
               </linearGradient>
             </defs>
             <CartesianGrid vertical={false} />
-            <XAxis dataKey="x" tickMargin={8} tickFormatter={(value) => value.slice(0, 90)}>
-            <Label value="Months" offset={-5} position="insideBottom" />
-            </XAxis>
-            <YAxis axisLine={false} tickLine={false} tickFormatter={(value) => formatNumber(value)} />
-            {/* <ChartTooltip cursor={false} content={<ChartTooltipContent indicator="dot" />} /> */}
+            <XAxis dataKey="x" tickMargin={3} tickFormatter={(value) => dayjs(value).format("MMM YY")} />
+            <YAxis axisLine={false} tickLine={false} tickFormatter={(value) => formatNumber(value)} domain={domain}>
+              <Label value="Tokens" offset={8} position="left" angle={270} />
+            </YAxis>
             <ChartTooltip content={customTooltip} />
             <Area
               dataKey="y"
-              type="natural"
-              //   fill="var(--color-desktop)"
-              //   fillOpacity={0.4}
-              //   stroke="var(--color-desktop)"
               fill="url(#colorRedWhite)"
               fillOpacity={0.4}
               stroke="red"
+              strokeWidth={2}
+              strokeOpacity={0.4}
+              isAnimationActive={true}
             />
           </ReChartAreaChart>
         </ChartContainer>
       </CardContent>
-    </Card>
+    </div>
   );
 };
 

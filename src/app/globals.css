@@ -67,3 +67,17 @@
     @apply bg-background text-foreground;
   }
 }
+
+.css-1njaxz2{
+  border: 1px solid #e2e8f0;
+  border-radius: 50px;
+  height: 58px;
+  width: 90px;
+}
+
+.css-1njaxz3{
+  border-radius: 50px;
+  height: 60px;
+  width: auto;
+  background-color: black;
+}

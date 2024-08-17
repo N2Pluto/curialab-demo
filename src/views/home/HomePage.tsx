@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { IMetrics } from "@/interfaces/stats.interface";
 import curiahubServices from "@/services/curiahub.services";
 import dayjs from "dayjs";
+import CardHeaderChart from "@/components/card/CardHeaderChart";
 
 export function HomePage() {
   const [metrics, setMetrics] = useState<IMetrics[]>([]);
@@ -11,7 +12,7 @@ export function HomePage() {
   const circulatingSupply = useMemo(() => {
     return metrics.map((metric) => {
       return {
-        x: dayjs(metric.date).format("MMM D"),
+        x: dayjs(metric.date).format("MMM D YYYY"),
         y: metric.circulatingSupply
       };
     });
@@ -20,7 +21,7 @@ export function HomePage() {
   const votableSupply = useMemo(() => {
     return metrics.map((metric) => {
       return {
-        x: dayjs(metric.date).format("MMM D"),
+        x: dayjs(metric.date).format("MMM D YYYY"),
         y: metric.votableSupply
       };
     });
@@ -46,8 +47,34 @@ export function HomePage() {
 
   return (
     <div>
-      <div className="container">
-        <div className="grid grid-cols-2 gap-4">
+      <div className="bg-background ">
+        <div className="container space-y-4 pb-5">
+          <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+            <div className="">Holder metrics</div>
+            <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+              <div className="">
+                <CardHeaderChart
+                  title="Circulating Supply"
+                  description="The amount of tokens that are circulating in the market and are tradeable by the public."
+                  value={latestMetrics?.circulatingSupply || 0}
+                  data={circulatingSupply}
+                />
+              </div>
+              <div className="">
+                <CardHeaderChart
+                  title="Circulating Supply"
+                  description="The amount of tokens that are circulating in the market and are tradeable by the public."
+                  value={latestMetrics?.circulatingSupply || 0}
+                  data={circulatingSupply}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="container space-y-4 pt-4">
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
           <CardAreaChart
             title="Circulating Supply"
             description="The amount of tokens that are circulating in the market and are tradeable by the public."
@@ -59,6 +86,24 @@ export function HomePage() {
             description="The total amount of tokens that is delegated to vote."
             value={latestMetrics?.votableSupply || 0}
             data={votableSupply}
+          />
+        </div>
+
+        <div className="grid grid-cols-1 gap-4 ">
+          <CardAreaChart
+            title="Circulating Supply"
+            description="The amount of tokens that are circulating in the market and are tradeable by the public."
+            value={latestMetrics?.circulatingSupply || 0}
+            data={circulatingSupply}
+          />
+        </div>
+
+        <div className="grid grid-cols-1 gap-4 ">
+          <CardAreaChart
+            title="Circulating Supply"
+            description="The amount of tokens that are circulating in the market and are tradeable by the public."
+            value={latestMetrics?.circulatingSupply || 0}
+            data={circulatingSupply}
           />
         </div>
       </div>
