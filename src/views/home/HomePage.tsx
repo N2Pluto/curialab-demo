@@ -1,9 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { IMetrics } from "@/interfaces/stats.interface";
+import { IHolderPeriod, IMetrics } from "@/interfaces/stats.interface";
 import curiahubServices from "@/services/curiahub.services";
-import dayjs from "dayjs";
 import dynamic from "next/dynamic";
 
 const CardHeaderChart = dynamic(() => import("@/components/card/CardHeaderChart"), {
@@ -16,14 +15,20 @@ const CardAreaChart = dynamic(() => import("@/components/card/CardAreaChart"), {
   loading: () => <p>Loading...</p>
 });
 
+const CardHoldingPeriod = dynamic(() => import("@/components/card/CardHoldingPeriod"), {
+  ssr: false,
+  loading: () => <p>Loading...</p>
+});
+
 export function HomePage() {
   const [metrics, setMetrics] = useState<IMetrics[]>([]);
   const [latestMetrics, setLatestMetrics] = useState<IMetrics>();
+  const [holderPeriod, setHolderPeriod] = useState<IHolderPeriod[]>();
 
   const holderWallet = useMemo(() => {
     return metrics.map((metric) => {
       return {
-        x: dayjs(metric.date).format("MMM D YYYY"),
+        x: metric.date,
         y: metric.holderWallet
       };
     });
@@ -32,7 +37,7 @@ export function HomePage() {
   const totalSupply = useMemo(() => {
     return metrics.map((metric) => {
       return {
-        x: dayjs(metric.date).format("MMM D YYYY"),
+        x: metric.date,
         y: metric.maxTotalSupply
       };
     });
@@ -41,7 +46,7 @@ export function HomePage() {
   const circulatingSupply = useMemo(() => {
     return metrics.map((metric) => {
       return {
-        x: dayjs(metric.date).format("MMM D YYYY"),
+        x: metric.date,
         y: metric.circulatingSupply
       };
     });
@@ -50,7 +55,7 @@ export function HomePage() {
   const votableSupply = useMemo(() => {
     return metrics.map((metric) => {
       return {
-        x: dayjs(metric.date).format("MMM D YYYY"),
+        x: metric.date,
         y: metric.votableSupply
       };
     });
@@ -59,11 +64,25 @@ export function HomePage() {
   const votableSupplyPercentage = useMemo(() => {
     return metrics.map((metric) => {
       return {
-        x: dayjs(metric.date).format("MMM D YYYY"),
+        x: metric.date,
         y: (metric.votableSupply / metric.circulatingSupply) * 100
       };
     });
   }, [metrics]);
+
+  const holdingPeriod = useMemo(() => {
+    if (holderPeriod) {
+      return holderPeriod.map((holderPeriod) => {
+        return {
+          x: holderPeriod.date,
+          y: holderPeriod.price,
+          y1 : Math.floor(Math.random() * 101),
+          y2 : Math.floor(Math.random() * 101),
+        };
+      });
+    }
+    return [];
+  }, [holderPeriod]);
 
   const fetchHolder = async () => {
     try {
@@ -77,11 +96,20 @@ export function HomePage() {
     }
   };
 
-  useEffect(() => {
-    fetchHolder();
-  }, []);
+  const fetchHolderPeriod = async () => {
+    try {
+      const result = await curiahubServices.getHolderPeriod();
+      if (result) {
+        setHolderPeriod(result);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  console.log(metrics);
+  useEffect(() => {
+    Promise.all([fetchHolder(), fetchHolderPeriod()]);
+  }, []);
 
   return (
     <div className="space-y-4">
@@ -130,6 +158,14 @@ export function HomePage() {
             height={450}
             label="Tokens"
             unit="token"
+          />
+        </div>
+
+        <div className="grid grid-cols-1 gap-4 ">
+          <CardHoldingPeriod
+            title="Holding Period"
+            description="The percentage of tokens that are circulating in the market and are tradeable by the public."
+            data={holdingPeriod}
           />
         </div>
 

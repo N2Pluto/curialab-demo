@@ -36,11 +36,10 @@ const AreaChart: React.FC<AreaChartProps> = ({ data, height, label, unit }) => {
 
   const customTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
-      console.log("payload", payload);
       console.log("label", label);
       return (
         <div className="box-border h-22 w-40 p-3  border-2 bg-white flex flex-col items-end rounded">
-          <p className="text-[10px]">{`${label}`}</p>
+          <p className="text-[10px]">{label}</p>
           <div className="border-t my-3 w-full"></div>
           <div>{`${Math.floor(payload[0].value).toLocaleString()} Token`}</div>
         </div>
@@ -90,14 +89,14 @@ const AreaChart: React.FC<AreaChartProps> = ({ data, height, label, unit }) => {
             </defs>
             <CartesianGrid vertical={false} />
 
-            <XAxis dataKey="x" tickMargin={3} tickFormatter={(value) => dayjs(value).format("MMM YY")} />
+            <XAxis dataKey="x" tickMargin={3} scale='auto'  tickFormatter={(value) => dayjs(value).format("MMM YY")} />
             <YAxis axisLine={false} tickLine={false} tickFormatter={tickFormatter} domain={domainFormatter()}>
               <Label value={label} offset={8} position="left" angle={270} style={{ textAnchor: "middle" }} />
             </YAxis>
             {unit === "percent" && (
               <>
                 <ReferenceLine
-                  x="Oct 20 2023"
+                  x="2023-10-20T00:00:00.000Z"
                   stroke="rgb(192, 223, 214)"
                   label={{ value: "Season 4", position: "insideTopRight" }}
                   strokeDasharray="4 4"
@@ -105,14 +104,14 @@ const AreaChart: React.FC<AreaChartProps> = ({ data, height, label, unit }) => {
                   strokeWidth="2"
                 />
                 <ReferenceLine
-                  x="May 18 2024"
+                  x="2024-05-18T00:00:00.000Z"
                   stroke="rgb(185, 219, 238)"
                   label={{ value: "Season 5", position: "insideTopRight" }}
                   strokeDasharray="4 4"
                   strokeWidth="2"
                 />
                 <ReferenceLine
-                  x="Aug 16 2024"
+                  x="2024-08-16T00:00:00.000Z"
                   stroke="rgb(245, 206, 185)"
                   label={{ value: "Season 6", position: "insideTopRight" }}
                   strokeDasharray="4 4"

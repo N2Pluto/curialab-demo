@@ -1,4 +1,4 @@
-import { IMetrics } from "@/interfaces/stats.interface";
+import { IHolderPeriod, IMetrics } from "@/interfaces/stats.interface";
 import axiosInstance from "@/lib/axiosInstance";
 
 interface ResGetPrice {
@@ -22,9 +22,17 @@ const getHolder = async (): Promise<ResGetHolder> => {
   return data;
 };
 
+const getHolderPeriod = async (): Promise<IHolderPeriod[]> => {
+  const path = "/stats/holding-period";
+  const { data } = await axiosInstance.get(path);
+  console.log("data", data);
+  return data;
+};
+
 const curiahubServices = {
   getPrice,
-  getHolder
+  getHolder,
+  getHolderPeriod
 };
 
 export default curiahubServices;
