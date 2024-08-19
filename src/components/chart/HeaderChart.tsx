@@ -5,6 +5,7 @@ import { Area, AreaChart as ReChartAreaChart, CartesianGrid, XAxis, YAxis, Label
 
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
+import { useEffect, useState } from "react";
 
 const chartConfig = {
   x: {
@@ -26,9 +27,47 @@ interface AreaChartProps {
 }
 
 const HeaderChart: React.FC<AreaChartProps> = ({ data }) => {
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
   return (
     <div>
-      <ChartContainer config={chartConfig}>
+      {/* <ChartContainer
+        config={chartConfig}
+        className="w-full"
+        style={{
+          height: `90px`,
+          maxHeight: `90px`,
+          width: `115px`
+        }}
+      > */}
+
+      <ChartContainer
+        config={chartConfig}
+        className="w-full"
+        style={{
+          height: `90px`,
+          maxHeight: `90px`,
+          width: `115px`,
+          maxWidth: `115px`,
+          boxSizing: "border-box",
+          overflow: "hidden",
+          ...(windowWidth < 1024 && { height: "220px", maxHeight: "220px", width: "100%", maxWidth: "100%" }
+          ),
+          ...(windowWidth < 800 && { height: "120px", maxHeight: "120px", width: "100%", maxWidth: "100%" }
+          ),
+        }}
+      >
         <ReChartAreaChart accessibilityLayer data={data}>
           <defs>
             <linearGradient id="colorRedWhite" x1="0" y1="0" x2="0" y2="1">

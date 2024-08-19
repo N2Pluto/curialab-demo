@@ -41,33 +41,33 @@ export function Navbar() {
         <nav className=" flex-col gap-1 text-lg font-medium md:flex md:flex-row md:items-center md:text-sm">
           <Link href={routes.HOME} className="flex items-center gap-2 text-lg font-semibold md:text-base">
             <div className="flex space-x-2">
-              <div className="w-[32px] md:w-[32px] cursor-pointer select-none ">
+              <div className="w-[32px] lg:w-[32px] cursor-pointer select-none ">
                 <img className="h-full" src="/images/curia-logo.svg" alt="logo" />
               </div>
-              <div className="w-[31px] md:w-[179px] cursor-pointer select-none hidden lg:block">
+              <div className="w-[31px] lg:w-[179px] cursor-pointer select-none hidden lg:block">
                 <img className="h-full" src="/images/curia-logo-text.svg" alt="logo" />
               </div>
             </div>
           </Link>
           <div className="content-center hidden lg:block">
             <div className="flex space-x-2 css-1njaxz2 justify-center items-center">
-              <div className="w-[32px] md:w-[32px]  select-none ">
+              <div className="w-[32px] lg:w-[32px]  select-none ">
                 <img className="h-full" src="/images/op-logo.svg" alt="logo" />
               </div>
-              <div className="w-[32px] md:w-[32px]  select-none">
-                <p className="text-xs md:text-xs">${price.toFixed(2)}</p>
+              <div className="w-[32px] lg:w-[32px]  select-none">
+                <p className="text-sm lg:text-sm">${price.toFixed(2)}</p>
               </div>
             </div>
           </div>
         </nav>
 
-        <nav className=" flex-row gap-1  items-center text-sm font-medium lg:flex md:flex-row hidden ">
+        <nav className=" flex-row gap-1  items-center text-base font-normal lg:flex lg:flex-row hidden">
           <div className="ml-auto flex-1 sm:flex-initial">
             <div className="relative">
               <div className="flex justify-end">
                 <div className="content-center">
                   <div className="css-1njaxz3 flex items-center">
-                    <div className="p-[1px]">
+                    <div className="p-[2px]">
                       <Link href={routes.HOME}>
                         <div className="bg-white rounded-full p-4">
                           <Menu />
@@ -85,19 +85,19 @@ export function Navbar() {
           </div>
         </nav>
 
-        <nav className=" flex-row gap-1  items-center text-sm font-medium lg:flex md:flex-row hidden ">
+        <nav className=" flex-row gap-1  items-center font-light lg:flex lg:flex-row hidden ">
           <div className="ml-auto flex-1 sm:flex-initial">
             <div className="relative">
               <div className="flex justify-end">
                 <div className="content-center pr-1">
                   <Link href={routes.FORM} target="_blank">
-                    <p className="text-md">Request Features</p>
+                    <p className="text-base font-light">Request Features</p>
                   </Link>
                 </div>
                 <div className="content-center pl-3">
                   <Link href={routes.HOME}>
                     <Button className="rounded-3xl bg-red-100 hover:bg-red-300 border-current" variant="outline">
-                      <p className="text-sm">Delegate Us</p>
+                      <p className="text-base font-light">Delegate Us</p>
                     </Button>
                   </Link>
                 </div>

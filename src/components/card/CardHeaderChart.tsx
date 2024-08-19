@@ -11,14 +11,14 @@ interface CardHeaderChartProps {
 
 const CardHeaderChart: React.FC<CardHeaderChartProps> = ({ title, value, data }) => {
   return (
-    <Card className="rounded-lg">
-      <div className="grid grid-cols-2">
-        <div className="">
-          <div>{title}</div>
-          <p className="text-xs">{Math.floor(value).toLocaleString()}</p>
+    <Card className="p-4 space-y-4 h-auto rounded-2xl">
+      <div className="grid grid-cols-2 h-full">
+        <div className="flex flex-col justify-between h-full">
+          <div className="text-xl">{title}</div>
+          <p className="text-base">{Math.floor(value).toLocaleString()}</p>
         </div>
 
-        <div>
+        <div className="flex items-center justify-center">
           <HeaderChart data={data} />
         </div>
       </div>

@@ -5,6 +5,7 @@ import { CardContent } from "@/components/ui/card";
 import { ChartConfig, ChartContainer, ChartTooltip } from "@/components/ui/chart";
 import formatNumber from "@/utils/format";
 import dayjs from "dayjs";
+import { useEffect, useState } from "react";
 
 const chartConfig = {
   x: {
@@ -23,30 +24,67 @@ interface AreaChartProps {
   description?: string;
   value?: number;
   data?: Data[];
-  height?: number;
+  height?: string;
+  width?: string;
   label: string;
   unit?: string;
 }
 
-const AreaChart: React.FC<AreaChartProps> = ({ data, height, label, unit }) => {
+const AreaChart: React.FC<AreaChartProps> = ({ data, height, width, label, unit }) => {
   const minValue = Math.min(...(data ?? []).map((d) => d.y));
   const maxValue = Math.max(...(data ?? []).map((d) => d.y));
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   const domain = [minValue * 0.9, maxValue * 1.1];
 
-  const customTooltip = ({ active, payload, label }: any) => {
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  const customTooltip = ({ active, payload, label, unit }: any) => {
     if (active && payload && payload.length) {
-      console.log("label", label);
+      const value = Math.floor(payload[0].value).toLocaleString();
+      const formattedLabel = dayjs(label).format("MMM D YY");
       return (
-        <div className="box-border h-22 w-40 p-3  border-2 bg-white flex flex-col items-end rounded">
-          <p className="text-[10px]">{label}</p>
-          <div className="border-t my-3 w-full"></div>
-          <div>{`${Math.floor(payload[0].value).toLocaleString()} Token`}</div>
+        <div>
+          {unit === "percent" ? (
+            <div className="box-border h-20 w-30 p-3  bg-white flex flex-col rounded-xl">
+              <span className="font-bold text-[12px]">
+                At<span className="text-red-400  pl-1">{formattedLabel}</span>
+              </span>
+              <div className="border-t my-3 w-full"></div>
+              <div className="text-base font-bold pl-2">{`${value} %`}</div>
+            </div>
+          ) : (
+            <div className="box-border h-22 w-40 p-3 border-2 bg-white flex flex-col items-end rounded">
+              <p className="text-[10px] font-bold">{formattedLabel}</p>
+              <div className="border-t my-3 w-full"></div>
+              <div className="font-medium">{`${value} Token`}</div>
+            </div>
+          )}
         </div>
       );
     }
 
     return null;
+  };
+
+  const CustomizedTick = (props: any) => {
+    const { x, y, payload } = props;
+
+    return (
+      <text x={x} y={y + 10} fill="#666" textAnchor="middle">
+        {dayjs(payload.value).format("MMM YY")}
+      </text>
+    );
   };
 
   const tickFormatter = (value: number) => {
@@ -71,7 +109,13 @@ const AreaChart: React.FC<AreaChartProps> = ({ data, height, label, unit }) => {
         <ChartContainer
           config={chartConfig}
           className="w-full"
-          style={{ height: `${height}px`, maxHeight: `${height}px` }}
+          style={{
+            height,
+            maxHeight: height,
+            width,
+            maxWidth: width,
+            ...(windowWidth < 1024 && { height: "250px", maxHeight: "250px" })
+          }}
         >
           <ReChartAreaChart
             accessibilityLayer
@@ -89,7 +133,12 @@ const AreaChart: React.FC<AreaChartProps> = ({ data, height, label, unit }) => {
             </defs>
             <CartesianGrid vertical={false} />
 
-            <XAxis dataKey="x" tickMargin={3} scale='auto'  tickFormatter={(value) => dayjs(value).format("MMM YY")} />
+            <XAxis
+              dataKey="x"
+              tickMargin={3}
+              tick={<CustomizedTick />}
+              tickFormatter={(value) => dayjs(value).format("MMM YY")}
+            />
             <YAxis axisLine={false} tickLine={false} tickFormatter={tickFormatter} domain={domainFormatter()}>
               <Label value={label} offset={8} position="left" angle={270} style={{ textAnchor: "middle" }} />
             </YAxis>
@@ -120,7 +169,7 @@ const AreaChart: React.FC<AreaChartProps> = ({ data, height, label, unit }) => {
               </>
             )}
 
-            <ChartTooltip content={customTooltip} />
+            <ChartTooltip content={(props) => customTooltip({ ...props, unit })} />
             <Area
               dataKey="y"
               fill="url(#colorRedWhite)"

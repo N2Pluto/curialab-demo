@@ -73,11 +73,30 @@ export function HomePage() {
   const holdingPeriod = useMemo(() => {
     if (holderPeriod) {
       return holderPeriod.map((holderPeriod) => {
+        const maxSum = 100;
+        let remaining = maxSum;
+        const randomValues = [];
+
+        for (let i = 0; i < 6; i++) {
+          const value = Math.floor(Math.random() * (remaining - (6 - i - 1)));
+          randomValues.push(value);
+          remaining -= value;
+        }
+
+        randomValues.push(remaining); // ใส่ค่า remaining ในตัวสุดท้าย (y7)
+
+        const [y1, y2, y3, y4, y5, y6, y7] = randomValues;
+
         return {
           x: holderPeriod.date,
           y: holderPeriod.price,
-          y1 : Math.floor(Math.random() * 101),
-          y2 : Math.floor(Math.random() * 101),
+          y1,
+          y2,
+          y3,
+          y4,
+          y5,
+          y6,
+          y7
         };
       });
     }
@@ -113,8 +132,8 @@ export function HomePage() {
 
   return (
     <div className="space-y-4">
-      <div className="bg-background space-y-4 ">
-        <div className="container px-20">
+      <div className="bg-background space-y-4 lg:pt-10 pb-4">
+        <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 items-center">
             <div className="text-5xl text-red-500 ">Holder metrics</div>
             <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
@@ -139,25 +158,25 @@ export function HomePage() {
         </div>
       </div>
 
-      <div className="container space-y-4 px-20">
+      <div className="container mx-auto px-4 space-y-4 ">
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
           <CardAreaChart
             title="Circulating Supply"
             description="The amount of tokens that are circulating in the market and are tradeable by the public."
             value={latestMetrics?.circulatingSupply || 0}
             data={circulatingSupply}
-            height={450}
+            height="450px"
             label="Tokens"
-            unit="token"
+            unit="Token"
           />
           <CardAreaChart
             title="Votable Supply"
             description="The total amount of tokens that is delegated to vote."
             value={latestMetrics?.votableSupply || 0}
             data={votableSupply}
-            height={450}
+            height="450px"
             label="Tokens"
-            unit="token"
+            unit="Token"
           />
         </div>
 
@@ -166,6 +185,10 @@ export function HomePage() {
             title="Holding Period"
             description="The percentage of tokens that are circulating in the market and are tradeable by the public."
             data={holdingPeriod}
+            height={450}
+            label="Holding period"
+            unit="percent"
+            value={0}
           />
         </div>
 
@@ -175,9 +198,10 @@ export function HomePage() {
             description="The percentage of tokens that are circulating in the market and are tradeable by the public."
             value={(Number(latestMetrics?.votableSupply) / Number(latestMetrics?.circulatingSupply)) * 100 || 0}
             data={votableSupplyPercentage}
-            height={300}
+            height="300px"
             label="Votable supply percentage"
             unit="percent"
+            width="1160px"
           />
         </div>
       </div>
