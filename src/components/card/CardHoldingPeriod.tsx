@@ -46,7 +46,7 @@ const CardHoldingPeriod: React.FC<CardHoldingPeriodProps> = ({ title, descriptio
           <div className="flex justify-center">{latestPrice.toFixed(2)}</div>
         </Card>
         <Card className="p-4 gap-3 h-auto rounded-2xl flex flex-wrap w-full md:w-auto ">
-          <HolderPeriodTag value={latestEntry?.y1 || 0} title="> 1Y" color="#B9DBEE" />
+          <HolderPeriodTag value={latestEntry?.y1 || 0} title="> 1Y" color="bg-[#B9DBEE]" />
           <HolderPeriodTag value={latestEntry?.y2 || 0} title="6M-1Y" color="#C0DFD6" />
           <HolderPeriodTag value={latestEntry?.y3 || 0} title="3-6M" color="#D7E5CD" />
           <HolderPeriodTag value={latestEntry?.y4 || 0} title="1-3M" color="#F7E8C4" />
@@ -74,7 +74,7 @@ const HolderPeriodTag: React.FC<TagProps> = ({ value, title, color }) => {
   return (
     <div className="space-y-2">
       <div className="flex items-center space-x-2">
-        <div className={`rounded-full w-4 h-4 min-w-4 min-h-4 m-0 p-0 bg-[${color}]`}></div>
+        <div className={`rounded-full w-4 h-4 min-w-4 min-h-4 m-0 p-0 ${color}`}></div>
         <div>{title}</div>
       </div>
       <div className="flex">{value.toFixed(2)} %</div>
