@@ -40,23 +40,23 @@ const HoldingPeriod: React.FC<CardHoldingPeriodProps> = ({ data }) => {
           <div className="border-t  w-full"></div>
           <div className="text-center text-gray-500 font-semibold text-sm">Holder Percentage</div>
           <div className="flex items-center space-x-2">
-            <HolderPeriodTag value={payload[0]?.payload.y1} title="> 1Y" color="#B9DBEE" unit="1" />
+            <HolderPeriodTag value={payload[0]?.payload.y1} title="> 1Y" color="bg-[#B9DBEE]" unit="1" />
             <HolderPeriodTag value={payload[0]?.payload.y2} title="6M-1Y" color="#C0DFD6" unit="1" />
           </div>
           <div className="flex items-center space-x-2">
-            <HolderPeriodTag value={payload[0]?.payload.y3} title="3-6M" color="#D7E5CD" unit="1" />
+            <HolderPeriodTag value={payload[0]?.payload.y3} title="3-6M" color="bg-[#D7E5CD]" unit="1" />
             <HolderPeriodTag value={payload[0]?.payload.y4} title="1-3M" color="#F7E8C4" unit="1" />
           </div>
           <div className="flex items-center space-x-2">
-            <HolderPeriodTag value={payload[0]?.payload.y5} title="1W-1M" color="#F6D9B5" unit="1" />
-            <HolderPeriodTag value={payload[0]?.payload.y6} title="<1W" color="#F5CEB9" unit="1" />
+            <HolderPeriodTag value={payload[0]?.payload.y5} title="1W-1M" color="bg-[#F6D9B5]" unit="1" />
+            <HolderPeriodTag value={payload[0]?.payload.y6} title="<1W" color="bg-[#F5CEB9]" unit="1" />
           </div>
           <div className="flex items-center space-x-2">
-            <HolderPeriodTag value={payload[0]?.payload.y7} title="24H" color="#F8ADB6" unit="1" />
+            <HolderPeriodTag value={payload[0]?.payload.y7} title="24H" color="bg-[#F8ADB6]" unit="1" />
           </div>
           <div className="border-t w-full"></div>
           <div className="flex items-center space-x-2">
-            <HolderPeriodTag value={payload[0]?.payload.y7} title="OP Price" color="#577590" />
+            <HolderPeriodTag value={payload[0]?.payload.y7} title="OP Price" color="bg-[#577590]" />
           </div>
         </div>
       );
@@ -226,7 +226,7 @@ interface TagProps {
 const HolderPeriodTag: React.FC<TagProps> = ({ value, title, color, unit }) => {
   return (
     <>
-      <div className={`rounded-full w-[14px] h-[14px] m-0 p-0 bg-[${color}]`}></div>
+      <div className={`rounded-full w-[14px] h-[14px] m-0 p-0 ${color}`}></div>
       <div>
         <div className="font-extralight text-gray-400">{title}</div>
         {unit === "1" ? (
