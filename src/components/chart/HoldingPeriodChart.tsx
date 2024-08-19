@@ -43,17 +43,35 @@ const HoldingPeriod: React.FC<CardHoldingPeriodProps> = ({ data, height, width, 
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
+  const latestEntry = data?.[data.length - 1];
+
   const customTooltip = ({ active, payload, label }: any) => {
-    console.log("payload", payload);
+    console.log("payload", payload[0]?.payload.y1);
 
     if (active && payload && payload.length) {
       return (
-        <div className="box-border h-22 w-40 p-3  border-2 bg-white flex flex-col rounded columns-3">
-          <p className="text-[10px]">{dayjs(label).format("MMM D YY")}</p>
-          <div className="border-t my-3 w-full"></div>
+        <div className="box-border  p-3  border-2 bg-white flex flex-col  columns-3 gap-2 rounded-lg">
+          <p className="text-sm w-full text-center font-medium">{dayjs(label).format("MMM D YY")}</p>
+          <div className="border-t  w-full"></div>
+          <div className="text-center text-gray-500 font-semibold text-sm">Holder Percentage</div>
           <div className="flex items-center space-x-2">
-            <div className="rounded-full w-[14px] h-[14px] m-0 p-0 bg-slate-500"></div>
-            <div>{`$ ${payload[0].value.toFixed(2).toLocaleString()}`}</div>
+            <HolderPeriodTag value={payload[0]?.payload.y1} title="> 1Y" color="#B9DBEE" unit="1" />
+            <HolderPeriodTag value={payload[0]?.payload.y2} title="6M-1Y" color="#C0DFD6" unit="1" />
+          </div>
+          <div className="flex items-center space-x-2">
+            <HolderPeriodTag value={payload[0]?.payload.y3} title="3-6M" color="#D7E5CD" unit="1" />
+            <HolderPeriodTag value={payload[0]?.payload.y4} title="1-3M" color="#F7E8C4" unit="1" />
+          </div>
+          <div className="flex items-center space-x-2">
+            <HolderPeriodTag value={payload[0]?.payload.y5} title="1W-1M" color="#F6D9B5" unit="1" />
+            <HolderPeriodTag value={payload[0]?.payload.y6} title="<1W" color="#F5CEB9" unit="1" />
+          </div>
+          <div className="flex items-center space-x-2">
+            <HolderPeriodTag value={payload[0]?.payload.y7} title="24H" color="#F8ADB6" unit="1" />
+          </div>
+          <div className="border-t w-full"></div>
+          <div className="flex items-center space-x-2">
+            <HolderPeriodTag value={payload[0]?.payload.y7} title="OP Price" color="#577590" />
           </div>
         </div>
       );
@@ -213,3 +231,25 @@ const HoldingPeriod: React.FC<CardHoldingPeriodProps> = ({ data, height, width, 
 };
 
 export default HoldingPeriod;
+
+interface TagProps {
+  value: number;
+  title: string;
+  color: string;
+  unit?: string;
+}
+const HolderPeriodTag: React.FC<TagProps> = ({ value, title, color, unit }) => {
+  return (
+    <>
+      <div className={`rounded-full w-[14px] h-[14px] m-0 p-0 bg-[${color}]`}></div>
+      <div>
+        <div className="font-extralight text-gray-400">{title}</div>
+        {unit === "1" ? (
+          <div className="font-bold">{`${value.toFixed(2).toLocaleString()} %`}</div>
+        ) : (
+          <div className="font-bold">{`$${value.toFixed(2).toLocaleString()} `}</div>
+        )}
+      </div>
+    </>
+  );
+};

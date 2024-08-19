@@ -1,11 +1,8 @@
 import HoldingPeriod, { Data } from "@/components/chart/HoldingPeriodChart";
-import DialogAreaChart from "@/components/dialog/DialogAreaChart";
 import DialogHolderChart from "@/components/dialog/DialogHolderChart";
 import { Card } from "@/components/ui/card";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Info } from "lucide-react";
-import dayjs from "dayjs";
-import { useMemo } from "react";
 
 interface CardHoldingPeriodProps {
   title: string;
@@ -56,12 +53,12 @@ const CardHoldingPeriod: React.FC<CardHoldingPeriodProps> = ({
       <div className="flex flex-col md:flex-row justify-center md:space-x-4 space-y-4 md:space-y-0 items-baseline text-sm">
         <Card className="p-4 space-y-2 h-auto rounded-2xl w-full md:w-auto">
           <div className="flex items-center space-x-2 w-full justify-center">
-            <div className="rounded-full w-[16px] h-[16px] m-0 p-0 bg-slate-500"></div>
+            <div className="rounded-full w-[16px] h-[16px] m-0 p-0 bg-[#577590]"></div>
             <p>OP Price</p>
           </div>
           <div className="flex justify-center">{latestPrice.toFixed(2)}</div>
         </Card>
-        <Card className="p-4 gap-3 h-auto rounded-2xl flex flex-wrap">
+        <Card className="p-4 gap-3 h-auto rounded-2xl flex flex-wrap w-full md:w-auto ">
           <HolderPeriodTag value={latestEntry?.y1 || 0} title="> 1Y" color="#B9DBEE" />
           <HolderPeriodTag value={latestEntry?.y2 || 0} title="6M-1Y" color="#C0DFD6" />
           <HolderPeriodTag value={latestEntry?.y3 || 0} title="3-6M" color="#D7E5CD" />

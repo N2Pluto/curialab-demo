@@ -64,7 +64,7 @@ const HeaderChart: React.FC<AreaChartProps> = ({ data }) => {
           overflow: "hidden",
           ...(windowWidth < 1024 && { height: "220px", maxHeight: "220px", width: "100%", maxWidth: "100%" }
           ),
-          ...(windowWidth < 800 && { height: "120px", maxHeight: "120px", width: "100%", maxWidth: "100%" }
+          ...(windowWidth < 800 && { height: "100px", maxHeight: "100px", width: "100%", maxWidth: "100%" }
           ),
         }}
       >

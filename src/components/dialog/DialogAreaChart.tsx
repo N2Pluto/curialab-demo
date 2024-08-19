@@ -1,18 +1,7 @@
 import AreaChart, { Data } from "@/components/chart/AreaChart";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Expand, X } from "lucide-react";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Expand } from "lucide-react";
 
 interface DialogAreaChartProps {
   title?: string;
@@ -34,7 +23,7 @@ const DialogAreaChart: React.FC<DialogAreaChartProps> = ({ title, data, height, 
         </Button>
       </DialogTrigger>
 
-      <DialogContent className="w-full xl:min-w-[1300px] rounded-3xl lg:w-[1000px]">
+      <DialogContent className=" rounded-xl w-full xl:min-w-[1300px] lg:min-w-[1000px]">
         <div className="text-xl text-red-500 slide-up">Holder Metrics</div>
         <div className="text-[39px] text-gray-900 slide-up">{title}</div>
         <AreaChart data={data} height={height} label={label} unit={unit} width="100%" />

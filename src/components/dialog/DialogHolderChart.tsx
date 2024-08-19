@@ -1,17 +1,6 @@
 import HoldingPeriod, { Data } from "@/components/chart/HoldingPeriodChart";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
+import { Dialog, DialogClose, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Expand } from "lucide-react";
 
 interface DialogAreaChartProps {
@@ -25,7 +14,7 @@ interface DialogAreaChartProps {
   unit?: string;
 }
 
-const DialogHolderChart: React.FC<DialogAreaChartProps> = ({ title, data, height, width, label, unit }) => {
+const DialogHolderChart: React.FC<DialogAreaChartProps> = ({ title, data, height, label, unit }) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
