@@ -22,10 +22,12 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-Why choose framework?
+##### Why choose framework?
+
 Next.js, Shadcn/UI, and Tailwind CSS together is popular for building modern, scalable, and maintainable web applications.
 
-Why choose holder page?
+##### Why choose holder page?
+
 - Implemented GET Curia API
 - Developed a chart component using the Recharts library.
 - Developed a responsive front-end layout.
