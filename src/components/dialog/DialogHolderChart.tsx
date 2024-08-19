@@ -5,16 +5,10 @@ import { Expand } from "lucide-react";
 
 interface DialogAreaChartProps {
   title?: string;
-  description?: string;
-  value?: number;
   data?: Data[];
-  height?: number;
-  width?: string;
-  label: string;
-  unit?: string;
 }
 
-const DialogHolderChart: React.FC<DialogAreaChartProps> = ({ title, data, height, label, unit }) => {
+const DialogHolderChart: React.FC<DialogAreaChartProps> = ({ title, data }) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -28,7 +22,7 @@ const DialogHolderChart: React.FC<DialogAreaChartProps> = ({ title, data, height
         <div className="text-xl text-red-500">Holder Metrics</div>
         <div className="text-[39px] text-gray-900">{title}</div>
 
-        <HoldingPeriod data={data} height={height} label={label} unit={unit} />
+        <HoldingPeriod data={data} />
       </DialogContent>
     </Dialog>
   );

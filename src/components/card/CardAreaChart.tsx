@@ -1,9 +1,8 @@
 import AreaChart, { Data } from "@/components/chart/AreaChart";
 import DialogAreaChart from "@/components/dialog/DialogAreaChart";
-import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { Expand, Info } from "lucide-react";
+import { Info } from "lucide-react";
 
 interface CardAreaChartProps {
   title: string;
@@ -11,12 +10,21 @@ interface CardAreaChartProps {
   value: number;
   data?: Data[];
   height?: string;
-  width?:string;
+  width?: string;
   label: string;
   unit?: string;
 }
 
-const CardAreaChart: React.FC<CardAreaChartProps> = ({ title, description, value, data, height, width, label, unit }) => {
+const CardAreaChart: React.FC<CardAreaChartProps> = ({
+  title,
+  description,
+  value,
+  data,
+  height,
+  width,
+  label,
+  unit
+}) => {
   console.log("value", value);
   return (
     <Card className="p-6 space-y-4 h-auto rounded-2xl">
@@ -38,7 +46,7 @@ const CardAreaChart: React.FC<CardAreaChartProps> = ({ title, description, value
         </div>
 
         <div className="ml-auto  hidden lg:block">
-          <DialogAreaChart title={title} data={data} height={height} width={width}  label={label} unit={unit} />
+          <DialogAreaChart title={title} data={data} height={height} width={width} label={label} unit={unit} />
         </div>
       </div>
       <div className="flex justify-end space-x-2 items-baseline">

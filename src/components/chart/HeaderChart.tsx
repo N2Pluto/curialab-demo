@@ -1,10 +1,7 @@
 "use client";
+import { Area, AreaChart as ReChartAreaChart } from "recharts";
 
-import { TrendingUp } from "lucide-react";
-import { Area, AreaChart as ReChartAreaChart, CartesianGrid, XAxis, YAxis, Label } from "recharts";
-
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
+import { ChartConfig, ChartContainer } from "@/components/ui/chart";
 import { useEffect, useState } from "react";
 
 const chartConfig = {
@@ -41,17 +38,7 @@ const HeaderChart: React.FC<AreaChartProps> = ({ data }) => {
     };
   }, []);
   return (
-    <div>
-      {/* <ChartContainer
-        config={chartConfig}
-        className="w-full"
-        style={{
-          height: `90px`,
-          maxHeight: `90px`,
-          width: `115px`
-        }}
-      > */}
-
+    <>
       <ChartContainer
         config={chartConfig}
         className="w-full"
@@ -62,10 +49,8 @@ const HeaderChart: React.FC<AreaChartProps> = ({ data }) => {
           maxWidth: `115px`,
           boxSizing: "border-box",
           overflow: "hidden",
-          ...(windowWidth < 1024 && { height: "220px", maxHeight: "220px", width: "100%", maxWidth: "100%" }
-          ),
-          ...(windowWidth < 800 && { height: "100px", maxHeight: "100px", width: "100%", maxWidth: "100%" }
-          ),
+          ...(windowWidth < 1024 && { height: "220px", maxHeight: "220px", width: "100%", maxWidth: "100%" }),
+          ...(windowWidth < 800 && { height: "100px", maxHeight: "100px", width: "100%", maxWidth: "100%" })
         }}
       >
         <ReChartAreaChart accessibilityLayer data={data}>
@@ -87,7 +72,7 @@ const HeaderChart: React.FC<AreaChartProps> = ({ data }) => {
           />
         </ReChartAreaChart>
       </ChartContainer>
-    </div>
+    </>
   );
 };
 

@@ -1,18 +1,8 @@
 "use client";
 import Link from "next/link";
-import { CircleUser, Menu, Package2, Search } from "lucide-react";
+import { Grip } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger
-} from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import curiahubServices from "@/services/curiahub.services";
 import { useEffect, useState } from "react";
 import { routes } from "@/constant/routes";
@@ -70,7 +60,7 @@ export function Navbar() {
                     <div className="p-[2px]">
                       <Link href={routes.HOME}>
                         <div className="bg-white rounded-full p-4">
-                          <Menu />
+                          <Grip />
                         </div>
                       </Link>
                     </div>

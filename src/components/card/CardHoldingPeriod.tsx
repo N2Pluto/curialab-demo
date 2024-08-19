@@ -7,23 +7,10 @@ import { Info } from "lucide-react";
 interface CardHoldingPeriodProps {
   title: string;
   description: string;
-  value: number;
   data?: Data[];
-  height?: number;
-  width?: string;
-  label: string;
-  unit?: string;
 }
 
-const CardHoldingPeriod: React.FC<CardHoldingPeriodProps> = ({
-  title,
-  description,
-  data,
-  height,
-  width,
-  label,
-  unit
-}) => {
+const CardHoldingPeriod: React.FC<CardHoldingPeriodProps> = ({ title, description, data }) => {
   const latestEntry = data?.[data.length - 1];
   const latestPrice = latestEntry ? latestEntry.y : 0;
 
@@ -47,7 +34,7 @@ const CardHoldingPeriod: React.FC<CardHoldingPeriodProps> = ({
         </div>
 
         <div className="ml-auto  hidden lg:block">
-          <DialogHolderChart title={title} data={data} height={height} width={width} label={label} unit={unit} />
+          <DialogHolderChart title={title} data={data} />
         </div>
       </div>
       <div className="flex flex-col md:flex-row justify-center md:space-x-4 space-y-4 md:space-y-0 items-baseline text-sm">
@@ -70,7 +57,7 @@ const CardHoldingPeriod: React.FC<CardHoldingPeriodProps> = ({
       </div>
 
       <div>
-        <HoldingPeriod data={data} height={height} label={label} unit={unit} />
+        <HoldingPeriod data={data} />
       </div>
     </Card>
   );

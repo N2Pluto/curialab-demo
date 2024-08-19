@@ -1,12 +1,10 @@
 "use client";
-import { Area, AreaChart as ReChartAreaChart, CartesianGrid, XAxis, YAxis, Label, ReferenceLine } from "recharts";
+import { Area, AreaChart as ReChartAreaChart, XAxis, YAxis, Label } from "recharts";
 
-import { Card, CardContent } from "@/components/ui/card";
+import { CardContent } from "@/components/ui/card";
 import { ChartConfig, ChartContainer, ChartTooltip } from "@/components/ui/chart";
-import formatNumber from "@/utils/format";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
-import { max } from "d3-array";
 
 const chartConfig = {
   x: {
@@ -28,26 +26,13 @@ export interface Data {
 }
 
 interface CardHoldingPeriodProps {
-  title?: string;
-  description?: string;
-  value?: number;
   data?: Data[];
-  height?: number;
-  width?: string;
-  label: string;
-  unit?: string;
 }
 
-const HoldingPeriod: React.FC<CardHoldingPeriodProps> = ({ data, height, width, label, unit }) => {
-  console.log("data", data);
-
+const HoldingPeriod: React.FC<CardHoldingPeriodProps> = ({ data }) => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
-  const latestEntry = data?.[data.length - 1];
-
   const customTooltip = ({ active, payload, label }: any) => {
-    console.log("payload", payload[0]?.payload.y1);
-
     if (active && payload && payload.length) {
       return (
         <div className="box-border  p-3  border-2 bg-white flex flex-col  columns-3 gap-2 rounded-lg">

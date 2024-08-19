@@ -7,17 +7,17 @@ import dynamic from "next/dynamic";
 
 const CardHeaderChart = dynamic(() => import("@/components/card/CardHeaderChart"), {
   ssr: false,
-  loading: () => <p>Loading...</p>
+  loading: () => <img src="/images/Loading.svg" alt="loading" />
 });
 
 const CardAreaChart = dynamic(() => import("@/components/card/CardAreaChart"), {
   ssr: false,
-  loading: () => <p>Loading...</p>
+  loading: () => <img src="/images/Loading.svg" alt="loading" />
 });
 
 const CardHoldingPeriod = dynamic(() => import("@/components/card/CardHoldingPeriod"), {
   ssr: false,
-  loading: () => <p>Loading...</p>
+  loading: () => <img src="/images/Loading.svg" alt="loading" />
 });
 
 export function HomePage() {
@@ -83,7 +83,7 @@ export function HomePage() {
           remaining -= value;
         }
 
-        randomValues.push(remaining); // ใส่ค่า remaining ในตัวสุดท้าย (y7)
+        randomValues.push(remaining);
 
         const [y1, y2, y3, y4, y5, y6, y7] = randomValues;
 
@@ -183,19 +183,15 @@ export function HomePage() {
         <div className="grid grid-cols-1 gap-4 ">
           <CardHoldingPeriod
             title="Holding Period"
-            description="The percentage of tokens that are circulating in the market and are tradeable by the public."
+            description="This chart indicates the different duration period for which OP holders have held the token. The holding period is calculated from the day the token is acquired until the day it is sold or transferred."
             data={holdingPeriod}
-            height={450}
-            label="Holding period"
-            unit="percent"
-            value={0}
           />
         </div>
 
         <div className="grid grid-cols-1 gap-4 ">
           <CardAreaChart
             title="Share of Votable Supply"
-            description="The percentage of tokens that are circulating in the market and are tradeable by the public."
+            description="The percentage of the total circulating supply of tokens that is currently delegated and ready to vote."
             value={(Number(latestMetrics?.votableSupply) / Number(latestMetrics?.circulatingSupply)) * 100 || 0}
             data={votableSupplyPercentage}
             height="300px"
