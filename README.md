@@ -22,16 +22,12 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## Framework
-- Next.js
-- Shadcn/ui
-- Tailwindcss
+Why choose framework?
+Next.js, Shadcn/UI, and Tailwind CSS together is popular for building modern, scalable, and maintainable web applications.
 
-Choosing Next.js, Shadcn/UI, and Tailwind CSS together is popular for building modern, scalable, and maintainable web applications.
-
-
-Implemented GET Curia API .
-Developed a chart component using the Recharts library.
-Developed a responsive front-end layout.
+Why choose holder page?
+- Implemented GET Curia API
+- Developed a chart component using the Recharts library.
+- Developed a responsive front-end layout.
 
 Get date from https://prod.op.api.curiahub.xyz/api/ and mockup holding period data.
