@@ -41,11 +41,11 @@ const HoldingPeriod: React.FC<CardHoldingPeriodProps> = ({ data }) => {
           <div className="text-center text-gray-500 font-semibold text-sm">Holder Percentage</div>
           <div className="flex items-center space-x-2">
             <HolderPeriodTag value={payload[0]?.payload.y1} title="> 1Y" color="bg-[#B9DBEE]" unit="1" />
-            <HolderPeriodTag value={payload[0]?.payload.y2} title="6M-1Y" color="#C0DFD6" unit="1" />
+            <HolderPeriodTag value={payload[0]?.payload.y2} title="6M-1Y" color="bg-[#C0DFD6]" unit="1" />
           </div>
           <div className="flex items-center space-x-2">
             <HolderPeriodTag value={payload[0]?.payload.y3} title="3-6M" color="bg-[#D7E5CD]" unit="1" />
-            <HolderPeriodTag value={payload[0]?.payload.y4} title="1-3M" color="#F7E8C4" unit="1" />
+            <HolderPeriodTag value={payload[0]?.payload.y4} title="1-3M" color="bg-[#F7E8C4]" unit="1" />
           </div>
           <div className="flex items-center space-x-2">
             <HolderPeriodTag value={payload[0]?.payload.y5} title="1W-1M" color="bg-[#F6D9B5]" unit="1" />
